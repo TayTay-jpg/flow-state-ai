@@ -4,7 +4,6 @@ import { Bell, Search } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,9 +14,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const notifications = [
-  "Weekly productivity report is ready",
-  "3 action items are due tomorrow",
-  "Meeting summary for Q3 Roadmap saved",
+  "Your generated content is ready to review",
+  "Tip: edit any AI output before you send it",
+  "AI outputs are not saved — download what you need",
 ];
 
 export function AppLayout({
@@ -61,9 +60,6 @@ export function AppLayout({
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
-            <Avatar className="h-9 w-9 border border-border">
-              <AvatarFallback className="bg-accent text-accent-foreground">AR</AvatarFallback>
-            </Avatar>
           </div>
         </div>
       </header>
