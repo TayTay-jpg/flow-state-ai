@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { NotebookPen, Upload, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -15,6 +16,7 @@ import {
   GeneratingState,
   OutputActions,
 } from "@/components/ai/AiOutput";
+import { summarizeNotes } from "@/lib/ai.functions";
 
 export const Route = createFileRoute("/meetings")({
   head: () => ({
@@ -35,61 +37,27 @@ export const Route = createFileRoute("/meetings")({
   component: MeetingsPage,
 });
 
-const SAMPLE_NOTES = `Q3 Roadmap Review — 12 July, 10:00–11:05 IST
-Present: Aarohi Sharma (PM), Dev Menon (Eng Lead), Priya Nair (Client Success), Rohan Gupta (Design), Lisa Fernandes (QA), Sam Okoye (Data)
-
-- Dev reported the payments integration is 80% complete; sandbox reconciliation bug still open.
-- Rohan showed the new onboarding flow; team agreed to drop the third tutorial step, it hurts completion.
-- Priya flagged that Northwind wants UAT extended by one week; they only have two testers available.
-- Lisa said the regression suite takes 4 hours and is blocking daily releases; proposes parallelising.
-- Sam requested event tracking on the new onboarding before launch, otherwise no funnel data.
-- Budget: no extra headcount this quarter. Contractor for QA automation approved for 6 weeks.
-- Agreed launch stays in Q3 but shifts from 25 Aug to 1 Sep.`;
-
-const SAMPLE_SUMMARY = `SUMMARY
-The team reviewed Q3 delivery status and agreed to shift the Project Atlas launch from 25 August to 1 September to accommodate an extended UAT window requested by Northwind. Engineering is 80% complete on payments integration, design simplified the onboarding flow, and QA raised release-blocking regression times. A six-week QA automation contractor was approved; no additional headcount otherwise.
-
-KEY DECISIONS
-1. Launch date moved from 25 August to 1 September (still within Q3).
-2. Onboarding tutorial reduced from three steps to two to improve completion.
-3. UAT extended by one week for Northwind with two client testers.
-4. QA automation contractor approved for six weeks; no new permanent headcount.
-5. Regression suite to be parallelised before daily releases resume.
-
-ACTION ITEMS
-- Dev Menon — Close the sandbox reconciliation bug and complete payments integration.
-- Rohan Gupta — Ship updated two-step onboarding designs to engineering.
-- Sam Okoye — Add event tracking to the onboarding funnel before launch.
-- Lisa Fernandes — Draft the parallelised regression plan and onboard the QA contractor.
-- Priya Nair — Confirm Northwind's two UAT testers and share sandbox credentials.
-- Aarohi Sharma — Circulate the revised project plan and milestone sign-off request.
-
-DEADLINES
-- 19 July — Sandbox reconciliation bug fixed; onboarding designs delivered.
-- 26 July — Event tracking live in staging; QA contractor onboarded.
-- 14 August — Integration work complete.
-- 18–25 August — User acceptance testing.
-- 1 September — Go-live.
-
-PARTICIPANTS
-Aarohi Sharma (Product Manager), Dev Menon (Engineering Lead), Priya Nair (Client Success), Rohan Gupta (Design), Lisa Fernandes (QA), Sam Okoye (Data).`;
-
 function MeetingsPage() {
-  const [notes, setNotes] = useState(SAMPLE_NOTES);
-  const [output, setOutput] = useState(SAMPLE_SUMMARY);
+  const [notes, setNotes] = useState("");
+  const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
+  const runSummarize = useServerFn(summarizeNotes);
 
-  const generate = () => {
+  const generate = async () => {
     if (!notes.trim()) {
       toast.error("Paste or upload your meeting notes first.");
       return;
     }
     setLoading(true);
-    setTimeout(() => {
-      setOutput(SAMPLE_SUMMARY);
-      setLoading(false);
+    try {
+      const { text } = await runSummarize({ data: { notes } });
+      setOutput(text.trim());
       toast.success("Summary generated");
-    }, 1400);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Couldn't summarize those notes.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const onUpload = (file?: File) => {
@@ -119,6 +87,7 @@ function MeetingsPage() {
               <Textarea
                 id="notes"
                 rows={16}
+                placeholder="Paste your raw meeting notes here — attendees, discussion points, decisions and dates."
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 className="rounded-xl"

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { Mail, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -23,6 +24,7 @@ import {
   GeneratingState,
   OutputActions,
 } from "@/components/ai/AiOutput";
+import { generateEmail } from "@/lib/ai.functions";
 
 export const Route = createFileRoute("/email")({
   head: () => ({
@@ -43,51 +45,31 @@ export const Route = createFileRoute("/email")({
   component: EmailPage,
 });
 
-const SAMPLE = `Subject: Project Atlas — Revised Timeline & Next Steps
-
-Hi Priya,
-
-Thank you for your patience while our team finalised the revised delivery plan for Project Atlas.
-
-Following last week's review, we have restructured the remaining scope into three focused phases. The integration work is now scheduled to complete by 14 August, with user acceptance testing running from 18–25 August and go-live targeted for 1 September. This adjustment keeps the original launch quarter intact while giving your team an additional week for validation.
-
-To keep us on track, could you confirm the following by Friday?
-
-1. Sign-off on the revised milestone dates
-2. The two UAT testers from your operations team
-3. Access credentials for the reporting sandbox
-
-I have attached the updated project plan for your reference. I am happy to walk through it on a short call if that would be helpful — I have availability Tuesday and Wednesday afternoon.
-
-Thank you again for your continued partnership.
-
-Warm regards,
-Aarohi Sharma
-Senior Product Manager, Aurelia
-aarohi.sharma@aurelia.io | +91 98200 44120`;
-
 function EmailPage() {
-  const [recipient, setRecipient] = useState("Priya Nair <priya.nair@northwind.co>");
-  const [subject, setSubject] = useState("Project Atlas — Revised Timeline & Next Steps");
-  const [prompt, setPrompt] = useState(
-    "Inform the client about the revised Project Atlas timeline, request sign-off on new milestone dates, and offer a call this week.",
-  );
+  const [recipient, setRecipient] = useState("");
+  const [subject, setSubject] = useState("");
+  const [prompt, setPrompt] = useState("");
   const [tone, setTone] = useState("formal");
   const [length, setLength] = useState("medium");
-  const [output, setOutput] = useState(SAMPLE);
+  const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
+  const runGenerate = useServerFn(generateEmail);
 
-  const generate = () => {
+  const generate = async () => {
     if (!recipient.trim() || !prompt.trim()) {
       toast.error("Add a recipient and a prompt to generate an email.");
       return;
     }
     setLoading(true);
-    setTimeout(() => {
-      setOutput(SAMPLE.replace(/^Subject: .*$/m, `Subject: ${subject || "Quick update"}`));
-      setLoading(false);
+    try {
+      const { text } = await runGenerate({ data: { recipient, subject, prompt, tone, length } });
+      setOutput(text.trim());
       toast.success("Email drafted successfully");
-    }, 1200);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Couldn't generate the email.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -103,17 +85,28 @@ function EmailPage() {
           <CardContent className="space-y-4">
             <div className="space-y-1.5">
               <Label htmlFor="recipient">Recipient</Label>
-              <Input id="recipient" value={recipient} onChange={(e) => setRecipient(e.target.value)} />
+              <Input
+                id="recipient"
+                placeholder="e.g. Client team <team@company.com>"
+                value={recipient}
+                onChange={(e) => setRecipient(e.target.value)}
+              />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="subject">Subject</Label>
-              <Input id="subject" value={subject} onChange={(e) => setSubject(e.target.value)} />
+              <Input
+                id="subject"
+                placeholder="Optional — AI will suggest one"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+              />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="prompt">What should the email say?</Label>
               <Textarea
                 id="prompt"
                 rows={5}
+                placeholder="e.g. Ask the client to confirm the revised timeline and offer a call this week."
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
               />

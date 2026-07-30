@@ -41,17 +41,17 @@ const stats = [
 
 const activity = [
   {
-    title: "Client follow-up email to Priya Nair",
+    title: "Client follow-up email",
     meta: "Smart Email Generator · Formal tone",
     time: "12 min ago",
   },
   {
-    title: "Q3 Roadmap Review — summary & action items",
+    title: "Roadmap review — summary & action items",
     meta: "Meeting Notes Summarizer · 8 participants",
     time: "1 hour ago",
   },
   {
-    title: "Weekly schedule for product launch sprint",
+    title: "Weekly schedule for a product launch sprint",
     meta: "AI Task Planner · 14 tasks scheduled",
     time: "3 hours ago",
   },
@@ -84,11 +84,11 @@ function Dashboard() {
           <Sparkles className="mr-1 h-3 w-3" /> Powered by Gemini AI
         </Badge>
         <h2 className="max-w-xl text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-          Welcome back, Aarohi
+          Welcome back
         </h2>
         <p className="mt-2 max-w-xl text-sm text-foreground/80">
-          You saved 4.2 hours this week. Three action items from yesterday's roadmap review are
-          still waiting on you.
+          Draft emails, summarize meetings and plan your day with AI. Pick a tool below to get
+          started.
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
           {quickActions.map((a) => (
