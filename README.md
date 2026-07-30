@@ -1,212 +1,100 @@
-# Flow State AI
+```markdown
+# AI Workplace Productivity Assistant
 
-Loveable AI Prompt
+## Project Overview
 
-Build a modern, responsive SaaS web application called AI Workplace Productivity Assistant that helps users automate workplace tasks using Gemini AI.
+AI Workplace Productivity Assistant is a modern, responsive web application designed to help users automate common workplace tasks using Artificial Intelligence. The application provides an intuitive dashboard where users can generate professional emails, summarize meeting notes, and create organised daily or weekly task schedules.
 
-Design
+The application was built using the **Loveable** AI development platform and follows a clean, modern SaaS design with a soft pastel colour palette for an engaging and user-friendly experience.
 
-Clean, professional SaaS interface
+---
 
-Pastel theme using Soft Pink, Lavender and White
+## Features Implemented
 
-Rounded cards, soft shadows, modern icons and subtle animations
+### 🏠 Dashboard
+- Modern SaaS-style dashboard
+- Welcome section
+- Productivity statistics cards
+- Quick action buttons
+- Recent activity section
 
-Fully responsive (desktop, tablet and mobile)
+### ✉️ Smart Email Generator
+- Generate professional emails using AI
+- Multiple email tones:
+  - Formal
+  - Friendly
+  - Persuasive
+- Editable generated output
+- Copy, Download and Regenerate actions
 
-Collapsible sidebar on smaller screens
+### 📝 Meeting Notes Summarizer
+- Paste meeting notes for AI summarisation
+- Generates:
+  - Summary
+  - Key Decisions
+  - Action Items
+  - Deadlines
+  - Participants
+- Editable AI output
+- Copy, Download and Regenerate actions
 
-Navigation
+### 📅 AI Task Planner
+- Create daily or weekly schedules
+- Task prioritisation
+- AI-generated timetable
+- Editable schedule output
+- Copy, Download and Regenerate actions
 
-Dashboard
+### Responsible AI
+- Displays a disclaimer reminding users to review AI-generated content before relying on it.
 
-Smart Email Generator
+### Responsive Design
+- Desktop, tablet and mobile friendly
+- Modern sidebar navigation
+- Clean pastel user interface
+- Professional SaaS-inspired layout
 
-Meeting Notes Summarizer
+---
 
-AI Task Planner
+## Technologies and Tools Used
 
-Profile
+- **Loveable** (AI application development platform)
+- **Gemini AI** (AI model used through Loveable)
+- Responsive web design
+- Modern SaaS UI/UX principles
+- Pastel colour palette
+- Markdown (documentation)
 
-Settings
+---
 
-Help & Support
+## Setup Instructions
 
-Responsible AI
+### Option 1: View the Project
 
-Dashboard
+Open the deployed application generated using the Loveable platform in your web browser.
 
-Include:
+### Option 2: Edit the Project
 
-Welcome banner
+1. Open the project in the Loveable platform.
+2. Make any required changes to the application.
+3. Save and publish the updated version.
 
-Search bar
+No additional software installation or local setup is required when using the Loveable platform.
 
-Notifications
+---
 
-Statistics cards (Emails Generated, Meeting Summaries, Tasks Planned, Hours Saved)
+## Future Improvements
 
-Recent Activity
+- User authentication
+- Calendar integration
+- Smart reminders
+- AI chatbot assistant
+- Productivity analytics
+- Cloud storage integration
 
-Quick Action buttons
+---
 
-Smart Email Generator
+## Author
 
-Features:
-
-Recipient
-
-Subject
-
-Prompt box
-
-Tone selector (Formal, Friendly, Persuasive)
-
-Length selector
-
-Generate button
-
-Editable AI output
-
-Copy, Download and Regenerate buttons
-
-Generate a realistic professional email as sample content.
-
-Meeting Notes Summarizer
-
-Features:
-
-Paste/upload meeting notes
-
-Generate Summary
-
-Output sections:
-
-Summary
-
-Key Decisions
-
-Action Items
-
-Deadlines
-
-Participants
-
-Editable results
-
-Copy, Download and Regenerate buttons
-
-Include realistic example meeting notes and AI summary.
-
-AI Task Planner
-
-Features:
-
-Task input
-
-Priority selector
-
-Daily/Weekly schedule
-
-Generate Schedule
-
-Editable timetable
-
-Copy, Download and Regenerate buttons
-
-Generate a realistic productivity schedule.
-
-Profile
-
-Display:
-
-Avatar
-
-Name
-
-Role
-
-Email
-
-Productivity statistics
-
-Edit Profile button
-
-Settings
-
-Include:
-
-Theme
-
-Notifications
-
-Language
-
-AI Response Length
-
-Default Email Tone
-
-Accessibility
-
-Save button
-
-Help & Support
-
-Include:
-
-FAQs
-
-Contact Support
-
-Documentation
-
-Responsible AI
-
-Display a notice stating that AI-generated content may contain mistakes and should always be reviewed before use.
-
-UI Requirements
-
-Premium SaaS appearance
-
-Consistent pastel colour palette
-
-Editable AI outputs
-
-Loading animations
-
-Success and error messages
-
-Hover effects
-
-Empty states
-
-Professional icons
-
-Responsive layout
-
-No placeholder pages
-
-Populate every page with realistic sample content
-
-The application should feel production-ready, elegant and intuitive, similar to a modern AI productivity platform.
-
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/238a7b56-e66a-40e8-ab4e-7b9d75daa687).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+Developed as part of a university project using the Loveable AI platform.
 ```
