@@ -80,21 +80,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Aurelia AI — Workplace Productivity Assistant" },
+      { title: "Dashboard — Aurelia AI Workplace Assistant" },
       {
         name: "description",
         content:
-          "Automate emails, meeting summaries and task planning with Aurelia AI, your Gemini-powered workplace productivity assistant.",
+          "Track emails generated, meeting summaries, tasks planned and hours saved in your Aurelia AI workspace.",
       },
       { name: "author", content: "Aurelia AI" },
-      { property: "og:title", content: "Aurelia AI — Workplace Productivity Assistant" },
+      { property: "og:title", content: "Dashboard — Aurelia AI Workplace Assistant" },
       {
         property: "og:description",
-        content: "Automate emails, meeting summaries and task planning with Gemini AI.",
+        content: "Track emails generated, meeting summaries, tasks planned and hours saved in your Aurelia AI workspace.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Dashboard — Aurelia AI Workplace Assistant" },
+      { name: "twitter:description", content: "Track emails generated, meeting summaries, tasks planned and hours saved in your Aurelia AI workspace." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0e304232-e057-4bb9-8f1f-f92fe2f48bdb/id-preview-d367fd83--238a7b56-e66a-40e8-ab4e-7b9d75daa687.lovable.app-1785419320881.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0e304232-e057-4bb9-8f1f-f92fe2f48bdb/id-preview-d367fd83--238a7b56-e66a-40e8-ab4e-7b9d75daa687.lovable.app-1785419320881.png" },
     ],
     links: [
       {

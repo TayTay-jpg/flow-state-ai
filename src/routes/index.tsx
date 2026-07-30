@@ -25,7 +25,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Dashboard — Aurelia AI Workplace Assistant" },
       {
         property: "og:description",
-        content: "Your AI productivity command centre: emails, summaries, tasks and time saved.",
+        content: "Track emails generated, meeting summaries, tasks planned and hours saved in your Aurelia AI workspace.",
       },
     ],
   }),
