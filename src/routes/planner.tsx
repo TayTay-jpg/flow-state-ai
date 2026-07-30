@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { ListChecks, Plus, Trash2, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -23,6 +24,7 @@ import {
   GeneratingState,
   OutputActions,
 } from "@/components/ai/AiOutput";
+import { planTasks } from "@/lib/ai.functions";
 
 export const Route = createFileRoute("/planner")({
   head: () => ({
@@ -45,66 +47,14 @@ export const Route = createFileRoute("/planner")({
 
 type Task = { id: number; title: string; priority: "High" | "Medium" | "Low" };
 
-const initialTasks: Task[] = [
-  { id: 1, title: "Finalise Project Atlas milestone plan", priority: "High" },
-  { id: 2, title: "Review onboarding designs with Rohan", priority: "Medium" },
-  { id: 3, title: "Prepare Northwind UAT credentials", priority: "High" },
-  { id: 4, title: "Draft Q3 stakeholder update", priority: "Medium" },
-  { id: 5, title: "Clear inbox and delegate support tickets", priority: "Low" },
-];
-
-const DAILY = `DAILY SCHEDULE — Thursday
-
-08:30 – 09:00  Inbox triage & day setup (Low priority, batched)
-09:00 – 10:30  Deep focus: Finalise Project Atlas milestone plan (High)
-10:30 – 10:45  Break
-10:45 – 11:30  Prepare Northwind UAT credentials & sandbox access (High)
-11:30 – 12:15  Design review with Rohan — onboarding flow (Medium)
-12:15 – 13:00  Lunch
-13:00 – 14:00  Draft Q3 stakeholder update (Medium)
-14:00 – 14:30  Buffer / overflow from morning blocks
-14:30 – 15:30  Team stand-in: unblock payments integration with Dev (High)
-15:30 – 16:15  Delegate support tickets, respond to non-urgent threads (Low)
-16:15 – 16:45  Plan tomorrow, update task board
-
-FOCUS TIME: 4h 15m · MEETINGS: 1h 45m · ADMIN: 1h 30m`;
-
-const WEEKLY = `WEEKLY SCHEDULE — 13 to 17 July
-
-MONDAY
-09:00 – 11:00  Deep work: Project Atlas milestone plan (High)
-11:30 – 12:30  Engineering sync — payments integration status
-14:00 – 16:00  Northwind UAT preparation (High)
-
-TUESDAY
-09:00 – 10:30  Onboarding design review with Rohan (Medium)
-11:00 – 12:00  Client call: Northwind timeline sign-off (High)
-14:00 – 15:30  Q3 stakeholder update draft (Medium)
-
-WEDNESDAY
-09:00 – 11:30  Deep work block: roadmap dependencies (High)
-13:00 – 14:00  QA contractor onboarding session
-14:30 – 16:00  Analytics review with Sam — onboarding funnel events
-
-THURSDAY
-09:00 – 10:30  Buffer for slipped work
-11:00 – 12:00  Weekly leadership review
-13:30 – 15:00  Documentation & process cleanup (Low)
-
-FRIDAY
-09:00 – 10:00  Inbox zero + ticket delegation (Low)
-10:30 – 12:00  Retrospective & next-sprint planning
-14:00 – 15:00  Weekly wrap-up, publish status to stakeholders
-
-CAPACITY: 26h planned · 6h buffer · 3 high-priority items completed by Wednesday`;
-
 function PlannerPage() {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState<Task["priority"]>("High");
   const [range, setRange] = useState("daily");
-  const [output, setOutput] = useState(DAILY);
+  const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
+  const runPlan = useServerFn(planTasks);
 
   const addTask = () => {
     if (!title.trim()) {
@@ -116,17 +66,23 @@ function PlannerPage() {
     toast.success("Task added");
   };
 
-  const generate = () => {
+  const generate = async () => {
     if (tasks.length === 0) {
       toast.error("Add at least one task to build a schedule.");
       return;
     }
     setLoading(true);
-    setTimeout(() => {
-      setOutput(range === "daily" ? DAILY : WEEKLY);
-      setLoading(false);
+    try {
+      const { text } = await runPlan({
+        data: { tasks: tasks.map((t) => ({ title: t.title, priority: t.priority })), range },
+      });
+      setOutput(text.trim());
       toast.success("Schedule generated");
-    }, 1300);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Couldn't build a schedule.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
