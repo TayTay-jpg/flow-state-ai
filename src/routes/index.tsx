@@ -84,7 +84,7 @@ function Dashboard() {
           <Sparkles className="mr-1 h-3 w-3" /> Powered by Gemini AI
         </Badge>
         <h2 className="max-w-xl text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-          Welcome back, Aarohi 👋
+          Welcome back, Aarohi
         </h2>
         <p className="mt-2 max-w-xl text-sm text-foreground/80">
           You saved 4.2 hours this week. Three action items from yesterday's roadmap review are
