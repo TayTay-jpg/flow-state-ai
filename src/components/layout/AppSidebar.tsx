@@ -4,9 +4,6 @@ import {
   Mail,
   NotebookPen,
   ListChecks,
-  User,
-  Settings,
-  LifeBuoy,
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
@@ -32,12 +29,7 @@ const workspace = [
   { title: "AI Task Planner", url: "/planner", icon: ListChecks },
 ] as const;
 
-const account = [
-  { title: "Profile", url: "/profile", icon: User },
-  { title: "Settings", url: "/settings", icon: Settings },
-  { title: "Help & Support", url: "/help", icon: LifeBuoy },
-  { title: "Responsible AI", url: "/responsible-ai", icon: ShieldCheck },
-] as const;
+const about = [{ title: "Responsible AI", url: "/responsible-ai", icon: ShieldCheck }] as const;
 
 export function AppSidebar() {
   const { state } = useSidebar();
@@ -83,8 +75,8 @@ export function AppSidebar() {
           <SidebarGroupContent>{renderItems(workspace)}</SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel>Account</SidebarGroupLabel>
-          <SidebarGroupContent>{renderItems(account)}</SidebarGroupContent>
+          <SidebarGroupLabel>About</SidebarGroupLabel>
+          <SidebarGroupContent>{renderItems(about)}</SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
