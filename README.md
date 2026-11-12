@@ -11,14 +11,14 @@ The application was built using the **Loveable** AI development platform and fol
 
 ## Features Implemented
 
-### 🏠 Dashboard
+###  Dashboard
 - Modern SaaS-style dashboard
 - Welcome section
 - Productivity statistics cards
 - Quick action buttons
 - Recent activity section
 
-### ✉️ Smart Email Generator
+###  Smart Email Generator
 - Generate professional emails using AI
 - Multiple email tones:
   - Formal
@@ -27,7 +27,7 @@ The application was built using the **Loveable** AI development platform and fol
 - Editable generated output
 - Copy, Download and Regenerate actions
 
-### 📝 Meeting Notes Summarizer
+###  Meeting Notes Summarizer
 - Paste meeting notes for AI summarisation
 - Generates:
   - Summary
@@ -38,7 +38,7 @@ The application was built using the **Loveable** AI development platform and fol
 - Editable AI output
 - Copy, Download and Regenerate actions
 
-### 📅 AI Task Planner
+###  AI Task Planner
 - Create daily or weekly schedules
 - Task prioritisation
 - AI-generated timetable
